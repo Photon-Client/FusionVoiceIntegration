@@ -248,7 +248,7 @@ namespace Photon.Voice.Fusion
         {
         }
 
-        void INetworkRunnerCallbacks.OnShutdown(NetworkRunner runner)
+        void INetworkRunnerCallbacks.OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
         {
         }
 
