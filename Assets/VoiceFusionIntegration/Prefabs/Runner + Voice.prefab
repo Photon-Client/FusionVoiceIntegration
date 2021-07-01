@@ -66,7 +66,7 @@ MonoBehaviour:
   runInBackground: 1
   statsResetInterval: 1000
   speakerPrefab: {fileID: 0}
-  primaryRecorder: {fileID: 1648130563415522866, guid: 800622bee2589db45ac123814ac6a5f2, type: 3}
+  primaryRecorder: {fileID: 0}
   globalRecordersLogLevel: 3
   globalSpeakersLogLevel: 3
   globalPlaybackDelay: -1
