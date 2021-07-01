@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -53737256404609428}
   - component: {fileID: 2132928725}
   m_Layer: 0
-  m_Name: VoicePrefab
+  m_Name: FusionVoicePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
