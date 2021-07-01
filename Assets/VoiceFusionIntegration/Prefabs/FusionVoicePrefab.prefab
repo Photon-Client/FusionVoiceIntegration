@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AoiMode: 0
+  DestroyWhenStateAuthorityLeaves: 0
   AoiPosition: {fileID: 0}
   Flags: 2305
   NetworkGuid:
@@ -68,10 +69,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Runner: {fileID: 0}
   Object: {fileID: -53737256404609428}
+  WordOffset: 0
+  WordCount: 0
   _interpolationDataSource: 0
   speakerInUse: {fileID: 432087262119711168}
   recorderInUse: {fileID: 0}
   logLevel: 5
+  ignoreGlobalLogLevel: 0
   AutoCreateRecorderIfNotFound: 0
   UsePrimaryRecorder: 1
   SetupDebugSpeaker: 0
