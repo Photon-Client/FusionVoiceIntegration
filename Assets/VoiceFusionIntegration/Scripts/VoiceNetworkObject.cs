@@ -457,7 +457,7 @@ namespace Photon.Voice.Fusion
             }
         }
 
-        private void Start()
+        public override void Spawned()
         {
             this.voiceConnection = this.Runner.GetComponent<VoiceConnection>();
             this.Setup();

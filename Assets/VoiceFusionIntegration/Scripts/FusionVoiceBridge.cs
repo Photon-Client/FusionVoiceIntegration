@@ -1,9 +1,9 @@
-using Fusion;
-using Fusion.Sockets;
-using PhotonAppSettings = Fusion.Photon.Realtime.PhotonAppSettings;
 
 namespace Photon.Voice.Fusion
 {
+    using global::Fusion;
+    using global::Fusion.Sockets;
+    using PhotonAppSettings = global::Fusion.Photon.Realtime.PhotonAppSettings;
     using System.Collections.Generic;
     using ExitGames.Client.Photon;
     using UnityEngine;
@@ -248,7 +248,7 @@ namespace Photon.Voice.Fusion
         {
         }
 
-        void INetworkRunnerCallbacks.OnShutdown(NetworkRunner runner)
+        void INetworkRunnerCallbacks.OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
         {
         }
 
