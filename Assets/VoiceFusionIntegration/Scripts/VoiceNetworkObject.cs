@@ -131,17 +131,17 @@ namespace Photon.Voice.Fusion
             }
         }
 
-        /// <summary> If true, this PhotonVoiceView is setup and ready to be used </summary>
+        /// <summary> If true, this VoiceNetworkObject is setup and ready to be used </summary>
         public bool IsSetup => this.IsNetworkObjectReady && (!this.RequiresRecorder || this.IsRecorder) && (!this.RequiresSpeaker || this.IsSpeaker);
 
-        /// <summary> If true, this PhotonVoiceView has a Speaker setup for playback of received audio frames from remote audio source </summary>
+        /// <summary> If true, this VoiceNetworkObject has a Speaker setup for playback of received audio frames from remote audio source </summary>
         public bool IsSpeaker { get; private set; }
-        /// <summary> If true, this PhotonVoiceView has a Speaker that is currently playing received audio frames from remote audio source </summary>
+        /// <summary> If true, this VoiceNetworkObject has a Speaker that is currently playing received audio frames from remote audio source </summary>
         public bool IsSpeaking => this.IsSpeaker && this.SpeakerInUse.IsPlaying;
 
-        /// <summary> If true, this PhotonVoiceView has a Recorder setup for transmission of audio stream from local audio source </summary>
+        /// <summary> If true, this VoiceNetworkObject has a Recorder setup for transmission of audio stream from local audio source </summary>
         public bool IsRecorder { get; private set; }
-        /// <summary> If true, this PhotonVoiceView has a Recorder that is currently transmitting audio stream from local audio source </summary>
+        /// <summary> If true, this VoiceNetworkObject has a Recorder that is currently transmitting audio stream from local audio source </summary>
         public bool IsRecording => this.IsRecorder && this.RecorderInUse.IsCurrentlyTransmitting;
 
         /// <summary> If true, the SpeakerInUse is linked to the remote voice stream </summary>
@@ -168,7 +168,7 @@ namespace Photon.Voice.Fusion
             {
                 if (this.Logger.IsDebugEnabled)
                 {
-                    this.Logger.LogDebug("PhotonVoiceView already setup");
+                    this.Logger.LogDebug("VoiceNetworkObject already setup");
                 }
                 return;
             }
@@ -339,9 +339,9 @@ namespace Photon.Voice.Fusion
         {
             if (this.IsRecorder)
             {
-                if (this.Logger.IsWarningEnabled)
+                if (this.Logger.IsInfoEnabled)
                 {
-                    this.Logger.LogWarning("Recorder already setup");
+                    this.Logger.LogInfo("Recorder already setup");
                 }
                 return;
             }
@@ -349,9 +349,9 @@ namespace Photon.Voice.Fusion
             {
                 if (this.IsNetworkObjectReady)
                 {
-                    if (this.Logger.IsWarningEnabled)
+                    if (this.Logger.IsInfoEnabled)
                     {
-                        this.Logger.LogWarning("Recorder not needed");
+                        this.Logger.LogInfo("Recorder not needed");
                     }
                 }
                 return;
@@ -361,7 +361,7 @@ namespace Photon.Voice.Fusion
             {
                 if (this.Logger.IsWarningEnabled)
                 {
-                    this.Logger.LogWarning("Recorder not setup for PhotonVoiceView: playback may not work properly.");
+                    this.Logger.LogWarning("Recorder not setup for VoiceNetworkObject: playback may not work properly.");
                 }
             }
             else
@@ -370,21 +370,21 @@ namespace Photon.Voice.Fusion
                 {
                     if (this.Logger.IsWarningEnabled)
                     {
-                        this.Logger.LogWarning("PhotonVoiceView.RecorderInUse.AutoStart is false, don't forget to start recording manually using recorder.StartRecording() or recorder.IsRecording = true.");
+                        this.Logger.LogWarning("VoiceNetworkObject.RecorderInUse.AutoStart is false, don't forget to start recording manually using recorder.StartRecording() or recorder.IsRecording = true.");
                     }
                 }
                 if (!this.RecorderInUse.TransmitEnabled)
                 {
                     if (this.Logger.IsWarningEnabled)
                     {
-                        this.Logger.LogWarning("PhotonVoiceView.RecorderInUse.TransmitEnabled is false, don't forget to set it to true to enable transmission.");
+                        this.Logger.LogWarning("VoiceNetworkObject.RecorderInUse.TransmitEnabled is false, don't forget to set it to true to enable transmission.");
                     }
                 }
                 if (!this.RecorderInUse.isActiveAndEnabled && this.RecorderInUse.RecordOnlyWhenEnabled)
                 {
                     if (this.Logger.IsWarningEnabled)
                     {
-                        this.Logger.LogWarning("PhotonVoiceView.RecorderInUse may not work properly as RecordOnlyWhenEnabled is set to true and recorder is disabled or attached to an inactive GameObject.");
+                        this.Logger.LogWarning("VoiceNetworkObject.RecorderInUse may not work properly as RecordOnlyWhenEnabled is set to true and recorder is disabled or attached to an inactive GameObject.");
                     }
                 }
             }
@@ -394,9 +394,9 @@ namespace Photon.Voice.Fusion
         {
             if (this.IsSpeaker)
             {
-                if (this.Logger.IsWarningEnabled)
+                if (this.Logger.IsInfoEnabled)
                 {
-                    this.Logger.LogWarning("Speaker already setup");
+                    this.Logger.LogInfo("Speaker already setup");
                 }
                 return;
             }
@@ -404,9 +404,9 @@ namespace Photon.Voice.Fusion
             {
                 if (this.IsNetworkObjectReady)
                 {
-                    if (this.Logger.IsWarningEnabled)
+                    if (this.Logger.IsInfoEnabled)
                     {
-                        this.Logger.LogWarning("Speaker not needed");
+                        this.Logger.LogInfo("Speaker not needed");
                     }
                 }
                 return;
@@ -416,7 +416,7 @@ namespace Photon.Voice.Fusion
             {
                 if (this.Logger.IsWarningEnabled)
                 {
-                    this.Logger.LogWarning("Speaker not setup for PhotonVoiceView: voice chat will not work.");
+                    this.Logger.LogWarning("Speaker not setup for VoiceNetworkObject: voice chat will not work.");
                 }
             }
             else
@@ -448,7 +448,7 @@ namespace Photon.Voice.Fusion
                 } 
                 else if (this.Logger.IsDebugEnabled)
                 {
-                    this.Logger.LogDebug("PhotonVoiceView does not have a Speaker and may not need late linking check");
+                    this.Logger.LogDebug("VoiceNetworkObject does not have a Speaker and may not need late linking check");
                 }
             }
             else if (this.Logger.IsDebugEnabled)
