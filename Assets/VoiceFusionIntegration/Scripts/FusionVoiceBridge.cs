@@ -2,11 +2,10 @@ namespace Photon.Voice.Fusion
 {
     using global::Fusion;
     using global::Fusion.Sockets;
-    using PhotonAppSettings = global::Fusion.Photon.Realtime.PhotonAppSettings;
+    using global::Fusion.Photon.Realtime.PhotonAppSettings;
     using System.Collections.Generic;
     using ExitGames.Client.Photon;
     using UnityEngine;
-    using Realtime;
     using Unity;
 
     [RequireComponent(typeof(NetworkRunner))]
