@@ -1,4 +1,3 @@
-
 namespace Photon.Voice.Fusion
 {
     using global::Fusion;
@@ -202,28 +201,75 @@ namespace Photon.Voice.Fusion
         }
 
         private const byte FusionNetworkIdTypeCode = 0; // we need to make sure this does not clash with other custom types?
-        private static byte[] buffer = new byte[sizeof(ulong)]; // fholm & erick said to serialize as ulong on slack
 
         private static object DeserializeFusionNetworkId(StreamBuffer instream, short length)
         {
-            lock (buffer)
+            NetworkId networkId = new NetworkId();
+            lock (memCompressedUInt64)
             {
-                instream.Read(buffer, 0, length);
-                ulong id = System.BitConverter.ToUInt64(buffer, 0);
-                return new NetworkId { Raw = (uint)id };   
+                ulong ul = ReadCompressedUInt64(instream);
+                networkId.Raw = (uint)ul;
+            }
+            return networkId;
+        }
+
+        private static ulong ReadCompressedUInt64(StreamBuffer stream)
+        {
+            ulong value = 0;
+            int shift = 0;
+
+            byte[] data = stream.GetBuffer();
+            int offset = stream.Position;
+
+            while (shift != 70)
+            {
+                if (offset >= data.Length)
+                {
+                    throw new System.IO.EndOfStreamException("Failed to read full ulong.");
+                }
+
+                byte b = data[offset];
+                offset++;
+
+                value |= (ulong)(b & 0x7F) << shift;
+                shift += 7;
+                if ((b & 0x80) == 0)
+                {
+                    break;
+                }
+            }
+
+            stream.Position = offset;
+            return value;
+        }
+
+        private static byte[] memCompressedUInt64 = new byte[10];
+
+        private static void WriteCompressedUInt64(StreamBuffer stream, ulong value)
+        {
+            int count = 0;
+            lock (memCompressedUInt64)
+            {
+                // put values in an array of bytes with variable length encoding
+                memCompressedUInt64[count] = (byte)(value & 0x7F);
+                value = value >> 7;
+                while (value > 0)
+                {
+                    memCompressedUInt64[count] |= 0x80;
+                    memCompressedUInt64[++count] = (byte)(value & 0x7F);
+                    value = value >> 7;
+                }
+                count++;
+
+                stream.Write(memCompressedUInt64, 0, count);
             }
         }
 
         private static short SerializeFusionNetworkId(StreamBuffer outstream, object customobject)
         {
-            lock (buffer)
-            {
-                NetworkId networkId = (NetworkId)customobject;
-                ulong l = networkId.Raw;
-                buffer = System.BitConverter.GetBytes(l);
-                outstream.Write(buffer, 0, buffer.Length);
-                return sizeof(long);
-            }
+            NetworkId networkId = (NetworkId) customobject;
+            WriteCompressedUInt64(outstream, networkId.Raw);
+            return 10;
         }
 
         #region INetworkRunnerCallbacks
