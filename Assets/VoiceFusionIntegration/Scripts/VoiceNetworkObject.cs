@@ -1,7 +1,6 @@
-using Fusion;
-
 namespace Photon.Voice.Fusion
 {
+    using global::Fusion;
     using Unity;
     using UnityEngine;
     using ExitGames.Client.Photon;
@@ -100,7 +99,7 @@ namespace Photon.Voice.Fusion
                 {
                     if (this.Logger.IsWarningEnabled)
                     {
-                        this.Logger.LogWarning("No need to set Recorder as the player does not have StateAuthority over this NetworkObject.");
+                        this.Logger.LogWarning("No need to set Recorder as this is a remote NetworkObject.");
                     }
                 }
             }
@@ -125,7 +124,7 @@ namespace Photon.Voice.Fusion
                 {
                     if (this.Logger.IsWarningEnabled)
                     {
-                        this.Logger.LogWarning("Speaker not set because the local player has StateAuthority over this NetworkObject and SetupDebugSpeaker is disabled.");
+                        this.Logger.LogWarning("Speaker not set because this is a local NetworkObject and SetupDebugSpeaker is disabled.");
                     }
                 }
             }
