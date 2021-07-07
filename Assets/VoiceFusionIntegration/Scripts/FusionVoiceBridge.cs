@@ -15,10 +15,19 @@ namespace Photon.Voice.Fusion
         private NetworkRunner networkRunner;
         private VoiceConnection voiceConnection;
 
+        [SerializeField]
+        private bool useFusionAppSettings = true;
+
         private EnterRoomParams voiceRoomParams = new EnterRoomParams
         {
             RoomOptions = new RoomOptions { IsVisible = false }
         };
+
+        public bool UseFusionAppSettings
+        {
+            get => this.useFusionAppSettings;
+            set => this.useFusionAppSettings = value;
+        }
 
         protected override void Awake()
         {
@@ -26,7 +35,10 @@ namespace Photon.Voice.Fusion
             RegisterCustomTypes();
             this.networkRunner = this.GetComponent<NetworkRunner>();
             this.voiceConnection = this.GetComponent<VoiceConnection>();
-            this.voiceConnection.Settings.AppIdVoice = PhotonAppSettings.Instance.AppSettings.AppIdVoice;
+            if (this.useFusionAppSettings)
+            {
+                this.voiceConnection.Settings = PhotonAppSettings.Instance.AppSettings;
+            }
             this.voiceConnection.SpeakerFactory = this.FusionSpeakerFactory;
         }
 
@@ -244,7 +256,7 @@ namespace Photon.Voice.Fusion
 
         private static byte[] memCompressedUInt64 = new byte[10];
 
-        private static void WriteCompressedUInt64(StreamBuffer stream, ulong value)
+        private static int WriteCompressedUInt64(StreamBuffer stream, ulong value)
         {
             int count = 0;
             lock (memCompressedUInt64)
@@ -262,13 +274,13 @@ namespace Photon.Voice.Fusion
 
                 stream.Write(memCompressedUInt64, 0, count);
             }
+            return count;
         }
 
         private static short SerializeFusionNetworkId(StreamBuffer outstream, object customobject)
         {
             NetworkId networkId = (NetworkId) customobject;
-            WriteCompressedUInt64(outstream, networkId.Raw);
-            return 10;
+            return (short)WriteCompressedUInt64(outstream, networkId.Raw);
         }
 
         #region INetworkRunnerCallbacks
