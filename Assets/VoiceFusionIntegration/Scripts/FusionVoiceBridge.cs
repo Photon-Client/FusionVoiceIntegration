@@ -12,6 +12,8 @@ namespace Photon.Voice.Fusion
     [RequireComponent(typeof(VoiceConnection))]
     public class FusionVoiceBridge : VoiceComponent, INetworkRunnerCallbacks
     {
+        #region Private Fields
+
         private NetworkRunner networkRunner;
         private VoiceConnection voiceConnection;
 
@@ -23,11 +25,19 @@ namespace Photon.Voice.Fusion
             RoomOptions = new RoomOptions { IsVisible = false }
         };
 
+        #endregion
+
+        #region Properties
+
         public bool UseFusionAppSettings
         {
             get => this.useFusionAppSettings;
             set => this.useFusionAppSettings = value;
         }
+
+        #endregion
+
+        #region Private Methods
 
         protected override void Awake()
         {
@@ -282,6 +292,8 @@ namespace Photon.Voice.Fusion
             NetworkId networkId = (NetworkId) customobject;
             return (short)WriteCompressedUInt64(outstream, networkId.Raw);
         }
+
+        #endregion
 
         #region INetworkRunnerCallbacks
 
