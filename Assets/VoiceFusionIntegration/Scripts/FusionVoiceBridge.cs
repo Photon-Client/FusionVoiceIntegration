@@ -2,8 +2,9 @@ namespace Photon.Voice.Fusion
 {
     using global::Fusion;
     using global::Fusion.Sockets;
-    using global::Fusion.Photon.Realtime;
+    using PhotonAppSettings = global::Fusion.Photon.Realtime.PhotonAppSettings;
     using System.Collections.Generic;
+    using Realtime;
     using ExitGames.Client.Photon;
     using UnityEngine;
     using Unity;
@@ -45,9 +46,22 @@ namespace Photon.Voice.Fusion
             RegisterCustomTypes();
             this.networkRunner = this.GetComponent<NetworkRunner>();
             this.voiceConnection = this.GetComponent<VoiceConnection>();
-            if (this.useFusionAppSettings)
+            if (this.useFusionAppSettings)  // todo: review
             {
-                this.voiceConnection.Settings = PhotonAppSettings.Instance.AppSettings;
+                this.voiceConnection.Settings.AppIdVoice = PhotonAppSettings.Instance.AppSettings.AppIdVoice;
+                this.voiceConnection.Settings.AppVersion = PhotonAppSettings.Instance.AppSettings.AppVersion;
+                this.voiceConnection.Settings.FixedRegion = PhotonAppSettings.Instance.AppSettings.FixedRegion;
+                this.voiceConnection.Settings.UseNameServer = PhotonAppSettings.Instance.AppSettings.UseNameServer;
+                this.voiceConnection.Settings.Server = PhotonAppSettings.Instance.AppSettings.Server;
+                this.voiceConnection.Settings.Port = PhotonAppSettings.Instance.AppSettings.Port;
+                this.voiceConnection.Settings.ProxyServer = PhotonAppSettings.Instance.AppSettings.ProxyServer;
+                this.voiceConnection.Settings.BestRegionSummaryFromStorage = PhotonAppSettings.Instance.AppSettings.BestRegionSummaryFromStorage;
+                this.voiceConnection.Settings.EnableLobbyStatistics = false;
+                //this.voiceConnection.Settings.Protocol = ConnectionProtocol.Udp; // todo: decide if use same protocol or prefer UDP always?
+                //this.voiceConnection.Settings.EnableProtocolFallback = PhotonAppSettings.Instance.AppSettings.EnableProtocolFallback;
+                //this.voiceConnection.Settings.Protocol = PhotonAppSettings.Instance.AppSettings.Protocol;
+                //this.voiceConnection.Settings.AuthMode = (AuthModeOption)(int)PhotonAppSettings.Instance.AppSettings.AuthMode;
+
             }
             this.voiceConnection.SpeakerFactory = this.FusionSpeakerFactory;
         }
