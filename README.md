@@ -16,8 +16,8 @@ How to use:
     - Uncheck "Photon\PhotonChat" and "Photon\PhotonUnityNetworking" folders.
     - Uncheck "Photon\PhotonVoice\Code\Pun" and "Photon\PhotonVoice\Demos" folders.
 3. Open the Photon App Settings using the menu item at `Fusion\Realtime Settings`:
-    1. Get AppId of type Fusion and set it in Realtime Settings: Realtime AppId.
-    2. Get AppId of type Voice and set it in Realtime Settings: Voice AppId.
+    1. Get AppId of type Fusion and set it in Realtime Settings: "App Id Fusion".
+    2. Get AppId of type Voice and set it in VoiceConnection component (under AppSettings) in prefab "Assets/VoiceFusionIntegration/Prefabs/Runner + Voice.prefab".
 
 ---
 
