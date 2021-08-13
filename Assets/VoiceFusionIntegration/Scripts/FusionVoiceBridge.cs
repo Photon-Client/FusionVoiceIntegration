@@ -2,7 +2,6 @@ namespace Photon.Voice.Fusion
 {
     using global::Fusion;
     using global::Fusion.Sockets;
-    using PhotonAppSettings = global::Fusion.Photon.Realtime.PhotonAppSettings;
     using System.Collections.Generic;
     using Realtime;
     using ExitGames.Client.Photon;
@@ -17,27 +16,14 @@ namespace Photon.Voice.Fusion
 
         private NetworkRunner networkRunner;
         private VoiceConnection voiceConnection;
-
-        [SerializeField]
-        private bool useFusionAppSettings = true;
-
+        
         private EnterRoomParams voiceRoomParams = new EnterRoomParams
         {
             RoomOptions = new RoomOptions { IsVisible = false }
         };
 
         #endregion
-
-        #region Properties
-
-        public bool UseFusionAppSettings
-        {
-            get => this.useFusionAppSettings;
-            set => this.useFusionAppSettings = value;
-        }
-
-        #endregion
-
+        
         #region Private Methods
 
         protected override void Awake()
@@ -46,23 +32,6 @@ namespace Photon.Voice.Fusion
             RegisterCustomTypes();
             this.networkRunner = this.GetComponent<NetworkRunner>();
             this.voiceConnection = this.GetComponent<VoiceConnection>();
-            if (this.useFusionAppSettings)  // todo: review
-            {
-                this.voiceConnection.Settings.AppIdVoice = PhotonAppSettings.Instance.AppSettings.AppIdVoice;
-                this.voiceConnection.Settings.AppVersion = PhotonAppSettings.Instance.AppSettings.AppVersion;
-                this.voiceConnection.Settings.FixedRegion = PhotonAppSettings.Instance.AppSettings.FixedRegion;
-                this.voiceConnection.Settings.UseNameServer = PhotonAppSettings.Instance.AppSettings.UseNameServer;
-                this.voiceConnection.Settings.Server = PhotonAppSettings.Instance.AppSettings.Server;
-                this.voiceConnection.Settings.Port = PhotonAppSettings.Instance.AppSettings.Port;
-                this.voiceConnection.Settings.ProxyServer = PhotonAppSettings.Instance.AppSettings.ProxyServer;
-                this.voiceConnection.Settings.BestRegionSummaryFromStorage = PhotonAppSettings.Instance.AppSettings.BestRegionSummaryFromStorage;
-                this.voiceConnection.Settings.EnableLobbyStatistics = false;
-                //this.voiceConnection.Settings.Protocol = ConnectionProtocol.Udp; // todo: decide if use same protocol or prefer UDP always?
-                //this.voiceConnection.Settings.EnableProtocolFallback = PhotonAppSettings.Instance.AppSettings.EnableProtocolFallback;
-                //this.voiceConnection.Settings.Protocol = PhotonAppSettings.Instance.AppSettings.Protocol;
-                //this.voiceConnection.Settings.AuthMode = (AuthModeOption)(int)PhotonAppSettings.Instance.AppSettings.AuthMode;
-
-            }
             this.voiceConnection.SpeakerFactory = this.FusionSpeakerFactory;
         }
 
@@ -122,30 +91,9 @@ namespace Photon.Voice.Fusion
             return voiceNetworkObject.SpeakerInUse;
         }
 
-        // todo: finish implementing this or maybe make sure we don't need it
-        //internal void CheckLateLinking(Speaker speaker, NetworkId networkId)
-        //{
-        //    if (!speaker || speaker == null)
-        //    {
-        //        if (this.Logger.IsWarningEnabled)
-        //        {
-        //            this.Logger.LogWarning("Cannot check late linking for null Speaker");
-        //        }
-        //        return;
-        //    }
-        //    if (!networkId.IsValid)
-        //    {
-        //        if (this.Logger.IsWarningEnabled)
-        //        {
-        //            this.Logger.LogWarning("Cannot check late linking invalid NetworkId {0}", networkId);
-        //        }
-        //        return;
-        //    }
-        //}
-
         private string GetVoiceRoomName()
         {
-            return "Test"; // todo: change this
+            return string.Format("{0}_voice", this.networkRunner.GameInfo.RoomName);
         }
 
         private void ConnectOrJoinRoom()
