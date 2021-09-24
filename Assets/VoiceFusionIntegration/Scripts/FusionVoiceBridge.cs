@@ -93,7 +93,7 @@ namespace Photon.Voice.Fusion
 
         private string GetVoiceRoomName()
         {
-            return string.Format("{0}_voice", this.networkRunner.GameInfo.RoomName);
+            return string.Format("{0}_voice", this.networkRunner.SessionInfo.Name);
         }
 
         private void ConnectOrJoinRoom()
@@ -293,10 +293,10 @@ namespace Photon.Voice.Fusion
             this.Disconnect();
         }
 
-        void INetworkRunnerCallbacks.OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request)
+        void INetworkRunnerCallbacks.OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
         {
         }
-
+        
         void INetworkRunnerCallbacks.OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)
         {
         }
@@ -307,6 +307,10 @@ namespace Photon.Voice.Fusion
 
         void INetworkRunnerCallbacks.OnObjectWordsChanged(NetworkRunner runner, NetworkObject networkedObject, HashSet<int> changedWords,
             NetworkObjectMemoryPtr oldMemory)
+        {
+        }
+
+        void INetworkRunnerCallbacks.OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
         {
         }
 

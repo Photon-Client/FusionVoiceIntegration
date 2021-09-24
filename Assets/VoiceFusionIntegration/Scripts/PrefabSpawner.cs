@@ -48,7 +48,7 @@ namespace Photon.Voice.Fusion.Demo
         {
         }
 
-        void INetworkRunnerCallbacks.OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request)
+        void INetworkRunnerCallbacks.OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
         {
         }
 
@@ -62,6 +62,10 @@ namespace Photon.Voice.Fusion.Demo
 
         void INetworkRunnerCallbacks.OnObjectWordsChanged(NetworkRunner runner, NetworkObject networkedObject, HashSet<int> changedWords,
             NetworkObjectMemoryPtr oldMemory)
+        {
+        }
+
+        void INetworkRunnerCallbacks.OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) 
         {
         }
 
