@@ -21,15 +21,15 @@ How to use:
 ---
 
 5. Open the Fusion Network Project Settings using the menu item at `Fusion\Network Project Config`:
-    1. Click at `Rebuild Object Table`, so Fusion is aware of the Voice Prefab.
-    2. Click at `Import Scenes from Build Settings`, so Fusion update the list of known Scenes.
+    - Click at `Rebuild Object Table`, so Fusion is aware of the Voice Prefab.
+    - Click at `Import Scenes from Build Settings`, so Fusion update the list of known Scenes.
 6. Start an Host instance in Unity Editor by entering playmode (`FusionVoiceGameScene`): you are able to hear a recorded audio clip transmitted via Photon Voice.
 
 ---
 
 7. Disable 'Debug Echo' from Recorder component in PrimaryRecorder prefab ("Assets\VoiceFusionIntegration\Prefabs").
 8. Change 'Input Source Type' to 'Microphobe' from Recorder component in PrimaryRecorder prefab ("Assets\VoiceFusionIntegration\Prefabs").
-9. Build a Standalone Executable of the project.
-   a. Run one instance as a Host;
-   b. Run another instante as a Client;
+9. Build a Standalone Executable of the project:
+     - Run one instance as a Host;
+     - Run another instante as a Client;
 10. Once both are connected, you should be able to talk and be heard on the other end.
