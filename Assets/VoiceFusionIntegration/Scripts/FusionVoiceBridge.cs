@@ -151,6 +151,21 @@ namespace Photon.Voice.Fusion
 
         private bool Connect()
         {
+            AppSettings settings = new AppSettings();
+            this.voiceConnection.Settings.CopyTo(settings);
+            string fusionRegion = this.networkRunner.SessionInfo.Region;
+            if (!string.Equals(settings.FixedRegion, fusionRegion))
+            {
+                if (string.IsNullOrEmpty(settings.FixedRegion))
+                {
+                    this.Logger.LogInfo("Setting voice region to \"{0}\" to match fusion region.", fusionRegion);
+                }
+                else
+                {
+                    this.Logger.LogInfo("Switching voice region to \"{0}\" from \"{1}\" to match fusion region.", fusionRegion, settings.FixedRegion);
+                }
+                settings.FixedRegion = fusionRegion;
+            }
             return this.voiceConnection.ConnectUsingSettings();
         }
 
