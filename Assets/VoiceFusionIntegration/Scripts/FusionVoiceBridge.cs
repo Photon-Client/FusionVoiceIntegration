@@ -29,7 +29,7 @@ namespace Photon.Voice.Fusion
         protected override void Awake()
         {
             base.Awake();
-            RegisterCustomTypes();
+            VoiceRegisterCustomTypes();
             this.networkRunner = this.GetComponent<NetworkRunner>();
             this.voiceConnection = this.GetComponent<VoiceConnection>();
             this.voiceConnection.SpeakerFactory = this.FusionSpeakerFactory;
@@ -47,7 +47,7 @@ namespace Photon.Voice.Fusion
 
         private void OnVoiceClientStateChanged(ClientState previous, ClientState current)
         {
-            this.ConnectOrJoinRoom(current);
+            this.VoiceConnectOrJoinRoom(current);
         }
 
         private Speaker FusionSpeakerFactory(int playerId, byte voiceId, object userData)
@@ -91,17 +91,17 @@ namespace Photon.Voice.Fusion
             return voiceNetworkObject.SpeakerInUse;
         }
 
-        private string GetVoiceRoomName()
+        private string VoiceGetMirroringRoomName()
         {
             return string.Format("{0}_voice", this.networkRunner.SessionInfo.Name);
         }
 
-        private void ConnectOrJoinRoom()
+        private void VoiceConnectOrJoinRoom()
         {
-            this.ConnectOrJoinRoom(this.voiceConnection.ClientState);
+            this.VoiceConnectOrJoinRoom(this.voiceConnection.ClientState);
         }
 
-        private void ConnectOrJoinRoom(ClientState state)
+        private void VoiceConnectOrJoinRoom(ClientState state)
         {
             if (ConnectionHandler.AppQuits)
             {
@@ -111,7 +111,7 @@ namespace Photon.Voice.Fusion
             {
                 case ClientState.PeerCreated:
                 case ClientState.Disconnected:
-                    if (!this.Connect())
+                    if (!this.VoiceConnectAndFollowFusion())
                     {
                         if (this.Logger.IsErrorEnabled)
                         {
@@ -120,7 +120,7 @@ namespace Photon.Voice.Fusion
                     }
                     break;
                 case ClientState.ConnectedToMasterServer:
-                    if (!this.JoinRoom())
+                    if (!this.VoiceJoinMirroringRoom())
                     {
                         if (this.Logger.IsErrorEnabled)
                         {
@@ -129,7 +129,7 @@ namespace Photon.Voice.Fusion
                     }
                     break;
                 case ClientState.Joined:
-                    string expectedRoomName = this.GetVoiceRoomName();
+                    string expectedRoomName = this.VoiceGetMirroringRoomName();
                     string currentRoomName = this.voiceConnection.Client.CurrentRoom.Name;
                     if (!currentRoomName.Equals(expectedRoomName))
                     {
@@ -149,7 +149,7 @@ namespace Photon.Voice.Fusion
             }
         }
 
-        private bool Connect()
+        private bool VoiceConnectAndFollowFusion()
         {
             AppSettings settings = new AppSettings();
             this.voiceConnection.Settings.CopyTo(settings);
@@ -169,12 +169,12 @@ namespace Photon.Voice.Fusion
             return this.voiceConnection.ConnectUsingSettings();
         }
 
-        private void Disconnect()
+        private void VoiceDisconnect()
         {
             this.voiceConnection.Client.Disconnect();
         }
 
-        private bool JoinRoom(string voiceRoomName)
+        private bool VoiceJoinRoom(string voiceRoomName)
         {
             if (string.IsNullOrEmpty(voiceRoomName))
             {
@@ -188,12 +188,12 @@ namespace Photon.Voice.Fusion
             return this.voiceConnection.Client.OpJoinOrCreateRoom(this.voiceRoomParams);
         }
 
-        private bool JoinRoom()
+        private bool VoiceJoinMirroringRoom()
         {
-            return this.JoinRoom(this.GetVoiceRoomName());
+            return this.VoiceJoinRoom(this.VoiceGetMirroringRoomName());
         }
 
-        private static void RegisterCustomTypes()
+        private static void VoiceRegisterCustomTypes()
         {
             PhotonPeer.RegisterType(typeof(NetworkId), FusionNetworkIdTypeCode, SerializeFusionNetworkId, DeserializeFusionNetworkId);
         }
@@ -278,7 +278,7 @@ namespace Photon.Voice.Fusion
         {
             if (runner.LocalPlayer == player)
             {
-                this.ConnectOrJoinRoom();
+                this.VoiceConnectOrJoinRoom();
             }
         }
 
@@ -300,12 +300,12 @@ namespace Photon.Voice.Fusion
 
         void INetworkRunnerCallbacks.OnConnectedToServer(NetworkRunner runner)
         {
-            this.ConnectOrJoinRoom();
+            this.VoiceConnectOrJoinRoom();
         }
 
         void INetworkRunnerCallbacks.OnDisconnectedFromServer(NetworkRunner runner)
         {
-            this.Disconnect();
+            this.VoiceDisconnect();
         }
 
         void INetworkRunnerCallbacks.OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
