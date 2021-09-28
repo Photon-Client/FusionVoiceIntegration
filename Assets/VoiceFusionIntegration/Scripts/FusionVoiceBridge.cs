@@ -166,7 +166,7 @@ namespace Photon.Voice.Fusion
                 }
                 settings.FixedRegion = fusionRegion;
             }
-            return this.voiceConnection.ConnectUsingSettings();
+            return this.voiceConnection.ConnectUsingSettings(settings);
         }
 
         private void VoiceDisconnect()
