@@ -11,8 +11,8 @@ For test scene we added `PrefabSpawner` and dummy prefab that will playback .wav
 
 How to use:
 
-1. Import Fusion [here](https://doc.photonengine.com/en-us/fusion/current/getting-started/sdk-download). (project tested with 0.7.0-Beta-Nightly-298)
-2. Import Photon Voice 2 using Unity Package Manager or from [Unity Asset Store](https://assetstore.unity.com/packages/tools/audio/photon-voice-2-130518) (project tested with 2.26): 
+1. Import Fusion [here](https://doc.photonengine.com/en-us/fusion/current/getting-started/sdk-download). (project tested with 0.8.0-Beta-Nightly-327
+2. Import Photon Voice 2 using Unity Package Manager or from [Unity Asset Store](https://assetstore.unity.com/packages/tools/audio/photon-voice-2-130518) (project tested with 2.27): 
     - Uncheck "Photon\PhotonChat" and "Photon\PhotonUnityNetworking" folders.
     - Uncheck "Photon\PhotonVoice\Code\Pun" and "Photon\PhotonVoice\Demos" folders.
 3. Open the Photon App Settings using the menu item at `Fusion\Realtime Settings`. Get AppId of type Fusion and set it in Realtime Settings: "App Id Fusion".
