@@ -7,6 +7,7 @@ namespace Photon.Voice.Fusion
     using ExitGames.Client.Photon;
     using UnityEngine;
     using Unity;
+    using System;
 
     [RequireComponent(typeof(NetworkRunner))]
     [RequireComponent(typeof(VoiceConnection))]
@@ -319,13 +320,24 @@ namespace Photon.Voice.Fusion
         void INetworkRunnerCallbacks.OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
         {
         }
-
-        void INetworkRunnerCallbacks.OnObjectWordsChanged(NetworkRunner runner, NetworkObject networkedObject, HashSet<int> changedWords,
-            NetworkObjectMemoryPtr oldMemory)
+        
+        void INetworkRunnerCallbacks.OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
         {
         }
 
-        void INetworkRunnerCallbacks.OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
+        void INetworkRunnerCallbacks.OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)
+        {
+        }
+
+        void INetworkRunnerCallbacks.OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data)
+        {
+        }
+
+        void INetworkRunnerCallbacks.OnSceneLoadDone(NetworkRunner runner)
+        {
+        }
+
+        void INetworkRunnerCallbacks.OnSceneLoadStart(NetworkRunner runner)
         {
         }
 

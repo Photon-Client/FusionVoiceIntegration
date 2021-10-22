@@ -5,6 +5,7 @@ namespace Photon.Voice.Fusion.Demo
 {
     using UnityEngine;
     using System.Collections.Generic;
+    using System;
 
     public class PrefabSpawner : MonoBehaviour, INetworkRunnerCallbacks
     {
@@ -59,13 +60,24 @@ namespace Photon.Voice.Fusion.Demo
         void INetworkRunnerCallbacks.OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
         {
         }
-
-        void INetworkRunnerCallbacks.OnObjectWordsChanged(NetworkRunner runner, NetworkObject networkedObject, HashSet<int> changedWords,
-            NetworkObjectMemoryPtr oldMemory)
+        
+        void INetworkRunnerCallbacks.OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) 
         {
         }
 
-        void INetworkRunnerCallbacks.OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) 
+        void INetworkRunnerCallbacks.OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)
+        {
+        }
+
+        void INetworkRunnerCallbacks.OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data)
+        {
+        }
+
+        void INetworkRunnerCallbacks.OnSceneLoadDone(NetworkRunner runner)
+        {
+        }
+
+        void INetworkRunnerCallbacks.OnSceneLoadStart(NetworkRunner runner)
         {
         }
 
