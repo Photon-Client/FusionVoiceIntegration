@@ -43,10 +43,18 @@ namespace Photon.Voice.Fusion.Demo
 
         void INetworkRunnerCallbacks.OnConnectedToServer(NetworkRunner runner)
         {
+            if (runner.GameMode == GameMode.Shared)
+            {
+                this.instance = runner.Spawn(this.prefab, Vector3.zero, Quaternion.identity, runner.LocalPlayer);
+            }
         }
 
         void INetworkRunnerCallbacks.OnDisconnectedFromServer(NetworkRunner runner)
         {
+            if (this.instance && runner.GameMode == GameMode.Shared)
+            {
+                runner.Despawn(this.instance);
+            }
         }
 
         void INetworkRunnerCallbacks.OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
