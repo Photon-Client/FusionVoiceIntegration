@@ -147,15 +147,13 @@ namespace Photon.Voice.Fusion
         public bool IsSpeakerLinked => this.IsSpeaker && this.SpeakerInUse.IsLinked;
 
         /// <summary> If true, the NetworkObject is found, non null & valid.</summary>
-        public bool IsNetworkObjectReady => this.Object && this.Object != null && this.Object.IsValid;
+        internal bool IsNetworkObjectReady => this.Object && this.Object != null && this.Object.IsValid;
 
-        internal bool RequiresSpeaker => this.SetupDebugSpeaker || this.IsNetworkObjectReady && this.IsRemotePlayerObject;
+        internal bool RequiresSpeaker => this.IsNetworkObjectReady && this.IsPlayer && (this.SetupDebugSpeaker || !this.IsLocal);
 
-        internal bool RequiresRecorder => this.IsNetworkObjectReady && this.IsLocalPlayerObject;
+        internal bool RequiresRecorder => this.IsNetworkObjectReady && this.IsPlayer && this.IsLocal;
 
-        internal bool IsLocalPlayerObject => this.Object.Runner.IsPlayer && this.IsLocal;
-
-        internal bool IsRemotePlayerObject => this.Object.Runner.IsPlayer && !this.IsLocal;
+        internal bool IsPlayer => this.Runner.IsPlayer;
 
         internal bool IsLocal => this.Object.Id.IsLocal && this.Object.HasInputAuthority;
 
