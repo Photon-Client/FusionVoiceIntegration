@@ -12,20 +12,42 @@ namespace Photon.Voice.Fusion.Demo
         [SerializeField]
         private NetworkObject prefab;
 
-        private NetworkObject instance;
+        private Dictionary<PlayerRef, NetworkObject> spawnedPlayers = new Dictionary<PlayerRef, NetworkObject>();
+
+        [SerializeField]
+        private bool debugLogs;
 
         #region INetworkRunnerCallbacks
 
         void INetworkRunnerCallbacks.OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
-            this.instance = runner.Spawn(this.prefab, Vector3.zero, Quaternion.identity, player);
+            if (this.debugLogs)
+            {
+                Debug.Log($"OnPlayerJoined {player} mode = {runner.GameMode}");
+            }
+            switch (runner.GameMode)
+            {
+                case GameMode.Single:
+                case GameMode.Server:
+                case GameMode.Host:
+                    this.SpawnPlayer(runner, player);
+                    break;
+            }
         }
 
         void INetworkRunnerCallbacks.OnPlayerLeft(NetworkRunner runner, PlayerRef player)
         {
-            if (this.instance)
+            if (this.debugLogs)
             {
-                runner.Despawn(this.instance);
+                Debug.Log($"OnPlayerLeft {player} mode = {runner.GameMode}");
+            }
+            switch (runner.GameMode)
+            {
+                case GameMode.Single:
+                case GameMode.Server:
+                case GameMode.Host:
+                    this.TryDespawnPlayer(runner, player);
+                    break;
             }
         }
 
@@ -39,21 +61,37 @@ namespace Photon.Voice.Fusion.Demo
 
         void INetworkRunnerCallbacks.OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
         {
+            if (this.debugLogs)
+            {
+                Debug.Log($"OnShutdown mode = {runner.GameMode} reason = {shutdownReason}");
+                foreach (var pair in this.spawnedPlayers)
+                {
+                    Debug.LogWarning($"Prefab not despawned? {pair.Key}:{pair.Value?.Id}");
+                }
+            }
         }
 
         void INetworkRunnerCallbacks.OnConnectedToServer(NetworkRunner runner)
         {
+            if (this.debugLogs)
+            {
+                Debug.Log($"OnConnectedToServer mode = {runner.GameMode}");
+            }
             if (runner.GameMode == GameMode.Shared)
             {
-                this.instance = runner.Spawn(this.prefab, Vector3.zero, Quaternion.identity, runner.LocalPlayer);
+                this.SpawnPlayer(runner, runner.LocalPlayer);
             }
         }
 
         void INetworkRunnerCallbacks.OnDisconnectedFromServer(NetworkRunner runner)
         {
-            if (this.instance && runner.GameMode == GameMode.Shared)
+            if (this.debugLogs)
             {
-                runner.Despawn(this.instance);
+                Debug.Log($"OnDisconnectedFromServer mode = {runner.GameMode}");
+            }
+            if (runner.GameMode == GameMode.Shared)
+            {
+                this.TryDespawnPlayer(runner, runner.LocalPlayer);
             }
         }
 
@@ -90,5 +128,40 @@ namespace Photon.Voice.Fusion.Demo
         }
 
         #endregion
+
+        private void SpawnPlayer(NetworkRunner runner, PlayerRef player)
+        {
+            NetworkObject instance = runner.Spawn(this.prefab, Vector3.zero, Quaternion.identity, player);
+            if (this.debugLogs)
+            {
+                if (this.spawnedPlayers.TryGetValue(player, out NetworkObject oldValue))
+                {
+                    Debug.LogWarning($"Replacing NO {oldValue?.Id} w/ {instance?.Id} for {player}");
+                }
+                else
+                {
+                    Debug.Log($"Spawned NO {instance?.Id} for {player}");
+                }
+            }
+            this.spawnedPlayers[player] = instance;
+        }
+
+        private bool TryDespawnPlayer(NetworkRunner runner, PlayerRef player)
+        {
+            if (this.spawnedPlayers.TryGetValue(player, out NetworkObject instance))
+            {
+                if (this.debugLogs)
+                {
+                    Debug.Log($"Despawning NO {instance?.Id} for {player}");
+                }
+                runner.Despawn(instance);
+                return this.spawnedPlayers.Remove(player);
+            }
+            if (this.debugLogs)
+            {
+                Debug.LogWarning($"No spawned NO found for player {player}");
+            }
+            return false;
+        }
     }
 }
