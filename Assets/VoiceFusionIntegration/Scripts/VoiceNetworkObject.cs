@@ -153,9 +153,11 @@ namespace Photon.Voice.Fusion
 
         internal bool RequiresRecorder => this.IsNetworkObjectReady && this.IsLocalPlayerObject;
 
-        internal bool IsLocalPlayerObject => this.Object.Runner.IsPlayer && this.Object.Id.IsLocal;
+        internal bool IsLocalPlayerObject => this.Object.Runner.IsPlayer && this.IsLocal;
 
-        internal bool IsRemotePlayerObject => this.Object.Runner.IsPlayer && !this.Object.Id.IsLocal;
+        internal bool IsRemotePlayerObject => this.Object.Runner.IsPlayer && !this.IsLocal;
+
+        internal bool IsLocal => this.Object.Id.IsLocal && this.Object.HasInputAuthority;
 
         #endregion
 
