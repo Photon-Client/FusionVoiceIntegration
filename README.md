@@ -30,9 +30,12 @@ How to use:
 7. Disable 'Debug Echo' from Recorder component in PrimaryRecorder prefab ("Assets\VoiceFusionIntegration\Prefabs").
 8. Change 'Input Source Type' to 'Microphobe' from Recorder component in PrimaryRecorder prefab ("Assets\VoiceFusionIntegration\Prefabs").
 9. Build a Standalone Executable of the project.
-10. Run multiple instances in different modes (one could be the Unity Editor):
-     10.A.
-         - Run at last one instance as a "Host" or "Server";
-         - Run two or more instances as a "Client";
+10. Run multiple instances in different modes (one could be the Unity Editor): 
+
+     10.A: 
+
+       - Run at last one instance as a "Host" or "Server";
+       - Run two or more instances as a "Client";
+
      10.B. Run two or more instances as "Shared Client".
 11. Once enough instances connected, you should be able to talk and be heard on the other end.
