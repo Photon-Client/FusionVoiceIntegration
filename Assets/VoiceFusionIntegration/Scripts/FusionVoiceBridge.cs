@@ -1,3 +1,4 @@
+#if FUSION_WEAVER
 namespace Photon.Voice.Fusion
 {
     using global::Fusion;
@@ -55,7 +56,7 @@ namespace Photon.Voice.Fusion
         {
             if (!(userData is NetworkId))
             {
-                if (this.Logger.IsWarningEnabled)
+                if (this.Logger.IsDebugEnabled)
                 {
                     this.Logger.LogWarning("UserData ({0}) is not of type NetworkId. Remote voice {1}/{2} not linked. Do you have a Recorder not used with a VoiceNetworkObject? is this expected?",
                         userData == null ? "null" : userData.ToString(), playerId, voiceId);
@@ -88,7 +89,6 @@ namespace Photon.Voice.Fusion
             {
                 voiceNetworkObject.SetupSpeakerInUse();
             }
-            //voiceNetworkObject.name = $"{playerId} {voiceId} {userData}";
             return voiceNetworkObject.SpeakerInUse;
         }
 
@@ -344,4 +344,4 @@ namespace Photon.Voice.Fusion
         #endregion
     }
 }
-
+#endif

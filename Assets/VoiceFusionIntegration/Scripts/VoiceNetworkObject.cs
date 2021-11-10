@@ -1,3 +1,4 @@
+#if FUSION_WEAVER
 namespace Photon.Voice.Fusion
 {
     using global::Fusion;
@@ -426,7 +427,6 @@ namespace Photon.Voice.Fusion
         
         private object GetUserData()
         {
-            //return (int)this.Object.Id.Raw;
             return this.Object.Id;
         }
 
@@ -438,7 +438,17 @@ namespace Photon.Voice.Fusion
                 {
                     if (!this.IsSpeakerLinked)
                     {
-                        //this.voiceConnection.CheckLateLinking(this.SpeakerInUse, this.photonView.ViewID);
+                        if (this.voiceConnection.TryLateLinkingUsingUserData(this.SpeakerInUse, this.GetUserData()))
+                        {
+                            if (this.Logger.IsDebugEnabled)
+                            {
+                                this.Logger.LogDebug("Late linking attempt succeeded.");
+                            }
+                        }
+                        else if (this.Logger.IsDebugEnabled)
+                        {
+                            this.Logger.LogDebug("Late linking attempt failed.");
+                        }
                     }
                     else if (this.Logger.IsDebugEnabled)
                     {
@@ -465,3 +475,4 @@ namespace Photon.Voice.Fusion
         #endregion
     }
 }
+#endif
