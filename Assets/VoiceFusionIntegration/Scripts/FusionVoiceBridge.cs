@@ -58,7 +58,7 @@ namespace Photon.Voice.Fusion
             {
                 if (this.Logger.IsDebugEnabled)
                 {
-                    this.Logger.LogWarning("UserData ({0}) is not of type NetworkId. Remote voice {1}/{2} not linked. Do you have a Recorder not used with a VoiceNetworkObject? is this expected?",
+                    this.Logger.LogDebug("UserData ({0}) is not of type NetworkId. Remote voice {1}/{2} not linked. Do you have a Recorder not used with a VoiceNetworkObject? is this expected?",
                         userData == null ? "null" : userData.ToString(), playerId, voiceId);
                 }
                 return null;
