@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/VoiceFusionIntegration/Scenes/FusionVoiceGameScene.unity
+    path: Assets/VoiceFusionIntegration/Demos/0-Minimal/Scenes/Minimal.unity
+    guid: 11f10aa5f9c31104cbef7b7cd4892438
+  - enabled: 1
+    path: Assets/VoiceFusionIntegration/Demos/1-SpeakerPrefab/Scenes/SpeakerPrefab.unity
+    guid: ab2d986b253944847a4843b619f81da1
+  - enabled: 1
+    path: Assets/VoiceFusionIntegration/Demos/2-FusionPrefab/Scenes/FusionPrefab.unity
     guid: b773391cb662af842bb36eaa98b8f1d1
   m_configObjects: {}

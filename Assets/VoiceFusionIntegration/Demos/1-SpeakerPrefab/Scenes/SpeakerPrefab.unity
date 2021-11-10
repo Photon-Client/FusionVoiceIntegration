@@ -345,13 +345,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88230848386761045af440d808ee3efa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RunnerPrefab: {fileID: 7741978242582812948, guid: ca7a743b9e73e9f42a38653851be24ce, type: 3}
+  RunnerPrefab: {fileID: 7741978242582812948, guid: 74a6b7dcb804a1f4f8d0a066c1ab8a3b, type: 3}
   StartMode: 0
-  Server: 0
+  AutoStartAs: 2
+  AutoHideGUI: 1
   AutoClients: 1
   ServerPort: 27015
   DefaultRoomName: 
   AlwaysShowStats: 0
+  includedStats: 0
+  StatsPosition:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0.33
+    height: 1
+  InitialScenePath: Assets/VoiceFusionIntegration/Demos/1-SpeakerPrefab/Scenes/SpeakerPrefab.unity
 --- !u!4 &1283099854
 Transform:
   m_ObjectHideFlags: 0

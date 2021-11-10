@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 7741978242582812951}
   - component: {fileID: 7741978242582812948}
   - component: {fileID: 7741978242582812953}
-  - component: {fileID: 7741978242582812949}
   - component: {fileID: 7741978242582812950}
   m_Layer: 0
-  m_Name: Runner + Voice
+  m_Name: Runner + Voice 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +66,7 @@ MonoBehaviour:
   updateInterval: 50
   runInBackground: 1
   statsResetInterval: 1000
-  speakerPrefab: {fileID: 0}
+  speakerPrefab: {fileID: 4973381658274221766, guid: b57127b65c4861146b1c3d9c4169c0d8, type: 3}
   primaryRecorder: {fileID: 8800698561670915797}
   globalRecordersLogLevel: 1
   globalSpeakersLogLevel: 1
@@ -97,20 +96,6 @@ MonoBehaviour:
   AutoCreateSpeakerIfNotFound: 1
   MaxDatagrams: 3
   SendAsap: 0
---- !u!114 &7741978242582812949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7741978242582812946}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c75f3c9385f0dd4cb7d18984cb59fb5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefab: {fileID: -53737256404609428, guid: 53d88623d8106c145870f93b0f813186, type: 3}
-  debugLogs: 0
 --- !u!114 &7741978242582812950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,7 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33a38d73a8571ce438052dd31e09df5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logLevel: 1
+  logLevel: 5
   ignoreGlobalLogLevel: 0
 --- !u!1001 &7853445099059353831
 PrefabInstance:
