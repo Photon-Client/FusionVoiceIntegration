@@ -40,6 +40,10 @@ namespace Photon.Voice.Fusion
         private void OnEnable()
         {
             this.voiceConnection.Client.StateChanged += this.OnVoiceClientStateChanged;
+            if (this.networkRunner.IsPlayer && this.networkRunner.IsConnectedToServer)
+            {
+                this.VoiceConnectOrJoinRoom();
+            }
         }
 
         private void OnDisable()
@@ -277,14 +281,34 @@ namespace Photon.Voice.Fusion
 
         void INetworkRunnerCallbacks.OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
+            if (this.Logger.IsDebugEnabled)
+            {
+                this.Logger.LogDebug("OnPlayerJoined {0}", player);
+            }
             if (runner.LocalPlayer == player)
             {
+                if (this.Logger.IsDebugEnabled)
+                {
+                    this.Logger.LogDebug("Local player joined, calling VoiceConnectOrJoinRoom");
+                }
                 this.VoiceConnectOrJoinRoom();
             }
         }
 
         void INetworkRunnerCallbacks.OnPlayerLeft(NetworkRunner runner, PlayerRef player)
         {
+            if (this.Logger.IsDebugEnabled)
+            {
+                this.Logger.LogDebug("OnPlayerLeft {0}", player);
+            }
+            if (runner.LocalPlayer == player)
+            {
+                if (this.Logger.IsDebugEnabled)
+                {
+                    this.Logger.LogDebug("Local player left, calling VoiceDisconnect");
+                }
+                this.VoiceDisconnect();
+            }
         }
 
         void INetworkRunnerCallbacks.OnInput(NetworkRunner runner, NetworkInput input)
@@ -306,6 +330,10 @@ namespace Photon.Voice.Fusion
 
         void INetworkRunnerCallbacks.OnDisconnectedFromServer(NetworkRunner runner)
         {
+            if (this.Logger.IsDebugEnabled)
+            {
+                this.Logger.LogDebug("OnDisconnectedFromServer, calling VoiceDisconnect");
+            }
             this.VoiceDisconnect();
         }
 
