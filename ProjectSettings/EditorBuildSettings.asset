@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/VoiceFusionIntegration/Demos/WithoutNDS/WithoutNDS.unity
+    guid: 9a61a8a4c271a304fa37c078cd82f4a7
+  - enabled: 1
     path: Assets/VoiceFusionIntegration/Demos/0-Minimal/Scenes/Minimal.unity
     guid: 11f10aa5f9c31104cbef7b7cd4892438
   - enabled: 1
