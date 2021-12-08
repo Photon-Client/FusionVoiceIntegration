@@ -156,7 +156,7 @@ namespace Photon.Voice.Fusion
 
         internal bool IsPlayer => this.Runner.IsPlayer;
 
-        internal bool IsLocal => this.Object.Id.IsLocal && this.Object.HasInputAuthority;
+        internal bool IsLocal => this.Object.HasInputAuthority;
 
         #endregion
 
