@@ -3,6 +3,7 @@ namespace Photon.Voice.Fusion
 {
     using global::Fusion;
     using global::Fusion.Sockets;
+    using PhotonAppSettings = global::Fusion.Photon.Realtime.PhotonAppSettings;
     using System.Collections.Generic;
     using Realtime;
     using ExitGames.Client.Photon;
@@ -26,6 +27,13 @@ namespace Photon.Voice.Fusion
 
         #endregion
         
+        #region Properties
+
+        [field: SerializeField]
+        public bool UseFusionAppSettings { get; set; } = true;
+
+        #endregion
+
         #region Private Methods
 
         protected override void Awake()
@@ -157,7 +165,26 @@ namespace Photon.Voice.Fusion
         private bool VoiceConnectAndFollowFusion()
         {
             AppSettings settings = new AppSettings();
-            this.voiceConnection.Settings.CopyTo(settings);
+            if (this.UseFusionAppSettings)
+            {
+                settings.AppIdVoice = PhotonAppSettings.Instance.AppSettings.AppIdVoice;
+                settings.AppVersion = PhotonAppSettings.Instance.AppSettings.AppVersion;
+                settings.FixedRegion = PhotonAppSettings.Instance.AppSettings.FixedRegion;
+                settings.UseNameServer = PhotonAppSettings.Instance.AppSettings.UseNameServer;
+                settings.Server = PhotonAppSettings.Instance.AppSettings.Server;
+                settings.Port = PhotonAppSettings.Instance.AppSettings.Port;
+                settings.ProxyServer = PhotonAppSettings.Instance.AppSettings.ProxyServer;
+                settings.BestRegionSummaryFromStorage = PhotonAppSettings.Instance.AppSettings.BestRegionSummaryFromStorage;
+                settings.EnableLobbyStatistics = false;
+                settings.EnableProtocolFallback = PhotonAppSettings.Instance.AppSettings.EnableProtocolFallback;
+                settings.Protocol = PhotonAppSettings.Instance.AppSettings.Protocol;
+                settings.AuthMode = (AuthModeOption)(int)PhotonAppSettings.Instance.AppSettings.AuthMode;
+                settings.NetworkLogging = PhotonAppSettings.Instance.AppSettings.NetworkLogging;
+            } 
+            else
+            {
+                this.voiceConnection.Settings.CopyTo(settings);
+            }
             string fusionRegion = this.networkRunner.SessionInfo.Region;
             if (!string.Equals(settings.FixedRegion, fusionRegion))
             {
