@@ -29,6 +29,9 @@ namespace Photon.Voice.Fusion
         
         #region Properties
 
+        /// <summary>
+        /// Whether or not to use the Voice AppId and all the other AppSettings from Fusion's RealtimeAppSettings ScriptableObject singleton in the Voice client/app.
+        /// </summary>
         [field: SerializeField]
         public bool UseFusionAppSettings { get; set; } = true;
 
