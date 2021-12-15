@@ -32,6 +32,14 @@ namespace Photon.Voice.Fusion
         [field: SerializeField]
         public bool UseFusionAppSettings { get; set; } = true;
 
+        /// <summary>
+        /// Whether or not to use the same AuthenticationValues used in Fusion client/app in Voice client/app as well.
+        /// This means that the same UserID will be used in both clients.
+        /// If custom authentication is used and setup in Fusion AppId from dashboard, the same configuration should be done for the Voice AppId.
+        /// </summary>
+        [field: SerializeField]
+        public bool UseFusionAuthValues { get; set; } = true;
+
         #endregion
 
         #region Private Methods
@@ -197,6 +205,29 @@ namespace Photon.Voice.Fusion
                     this.Logger.LogInfo("Switching voice region to \"{0}\" from \"{1}\" to match fusion region.", fusionRegion, settings.FixedRegion);
                 }
                 settings.FixedRegion = fusionRegion;
+            }
+            if (this.UseFusionAuthValues && this.networkRunner.AuthenticationValues != null)
+            {
+                this.voiceConnection.Client.AuthValues = new AuthenticationValues(this.networkRunner.AuthenticationValues.UserId) 
+                {
+                    AuthGetParameters = this.networkRunner.AuthenticationValues.AuthGetParameters,
+                    AuthType = (CustomAuthenticationType)(int)this.networkRunner.AuthenticationValues.AuthType
+                };
+                if (this.networkRunner.AuthenticationValues.AuthPostData != null)
+                {
+                    if (this.networkRunner.AuthenticationValues.AuthPostData is byte[] byteData)
+                    {
+                        this.voiceConnection.Client.AuthValues.SetAuthPostData(byteData);
+                    }
+                    else if (this.networkRunner.AuthenticationValues.AuthPostData is string stringData)
+                    {
+                        this.voiceConnection.Client.AuthValues.SetAuthPostData(stringData);
+                    }
+                    else if (this.networkRunner.AuthenticationValues.AuthPostData is Dictionary<string, object> dictData)
+                    {
+                        this.voiceConnection.Client.AuthValues.SetAuthPostData(dictData);
+                    }
+                }
             }
             return this.voiceConnection.ConnectUsingSettings(settings);
         }
