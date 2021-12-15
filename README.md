@@ -13,7 +13,7 @@ Main two components:
 
 ### Import
 
-1. Import Fusion [here](https://doc.photonengine.com/en-us/fusion/current/getting-started/sdk-download). (project tested with 0.12.0-RC-357)
+1. Import Fusion [here](https://doc.photonengine.com/en-us/fusion/current/getting-started/sdk-download). (project tested with 0.13.0-RC-Nightly-365)
 2. Import Photon Voice 2 using Unity Package Manager or from [Unity Asset Store](https://assetstore.unity.com/packages/tools/audio/photon-voice-2-130518) (project tested with 2.28.2): 
     - Uncheck "Photon\PhotonChat" and "Photon\PhotonUnityNetworking" folders.
     - Uncheck "Photon\PhotonVoice\Code\Pun" and "Photon\PhotonVoice\Demos" folders.
