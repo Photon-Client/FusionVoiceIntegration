@@ -197,15 +197,33 @@ namespace Photon.Voice.Fusion
                 this.voiceConnection.Settings.CopyTo(settings);
             }
             string fusionRegion = this.networkRunner.SessionInfo.Region;
-            if (!string.Equals(settings.FixedRegion, fusionRegion))
+            if (string.IsNullOrEmpty(fusionRegion))
             {
-                if (string.IsNullOrEmpty(settings.FixedRegion))
+                if (this.Logger.IsWarningEnabled)
                 {
-                    this.Logger.LogInfo("Setting voice region to \"{0}\" to match fusion region.", fusionRegion);
+                    this.Logger.LogWarning("Unexpected: fusion region is empty.");
                 }
-                else
+                if (!string.IsNullOrEmpty(settings.FixedRegion))
                 {
-                    this.Logger.LogInfo("Switching voice region to \"{0}\" from \"{1}\" to match fusion region.", fusionRegion, settings.FixedRegion);
+                    if (this.Logger.IsWarningEnabled)
+                    {
+                        this.Logger.LogWarning("Unexpected: fusion region is empty while voice region is set to \"{0}\". Setting it to null now.", settings.FixedRegion);
+                    }
+                    settings.FixedRegion = null;
+                }
+            }
+            else if (!string.Equals(settings.FixedRegion, fusionRegion, StringComparison.OrdinalIgnoreCase))
+            {
+                if (this.Logger.IsInfoEnabled)
+                {
+                    if (string.IsNullOrEmpty(settings.FixedRegion))
+                    {
+                        this.Logger.LogInfo("Setting voice region to \"{0}\" to match fusion region.", fusionRegion);
+                    }
+                    else
+                    {
+                        this.Logger.LogInfo("Switching voice region to \"{0}\" from \"{1}\" to match fusion region.", fusionRegion, settings.FixedRegion);
+                    }
                 }
                 settings.FixedRegion = fusionRegion;
             }
