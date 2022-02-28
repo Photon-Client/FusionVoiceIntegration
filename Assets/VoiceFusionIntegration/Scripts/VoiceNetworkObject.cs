@@ -182,32 +182,35 @@ namespace Photon.Voice.Fusion
             {
                 if (this.UsePrimaryRecorder)
                 {
-                    this.recorderInUse = this.voiceConnection.PrimaryRecorder;
-                    if (this.recorderInUse == null && this.Logger.IsErrorEnabled)
+                    if (this.voiceConnection.PrimaryRecorder != null)
                     {
-                        this.Logger.LogError("PrimaryRecorder is not set");
+                        this.recorderInUse = this.voiceConnection.PrimaryRecorder;
+                        return this.SetupRecorder(this.recorderInUse);
+                    } 
+                    if (this.Logger.IsErrorEnabled)
+                    {
+                        this.Logger.LogError("PrimaryRecorder is not set.");
                     }
                 }
-                else
+                Recorder[] recorders = this.GetComponentsInChildren<Recorder>();
+                if (recorders.Length > 0)
                 {
-                    Recorder[] recorders = this.GetComponentsInChildren<Recorder>();
-                    if (recorders.Length > 0)
+                    this.recorderInUse = recorders[0];
+                    if (recorders.Length > 1 && this.Logger.IsWarningEnabled)
                     {
-                        this.recorderInUse = recorders[0];
-                        if (recorders.Length > 1 && this.Logger.IsWarningEnabled)
-                        {
-                            this.Logger.LogWarning("Multiple Recorder components found attached to the GameObject or its children");
-                        }
+                        this.Logger.LogWarning("Multiple Recorder components found attached to the GameObject or its children.");
                     }
+                    return this.SetupRecorder(this.recorderInUse);
                 }
-                if (this.recorderInUse == null)
+                if (!this.AutoCreateRecorderIfNotFound)
                 {
-                    if (!this.AutoCreateRecorderIfNotFound)
+                    if (this.Logger.IsWarningEnabled)
                     {
-                        return false;
+                        this.Logger.LogWarning("No Recorder found to be setup.");
                     }
-                    this.recorderInUse = this.gameObject.AddComponent<Recorder>();
+                    return false;
                 }
+                this.recorderInUse = this.gameObject.AddComponent<Recorder>();
             }
             return this.SetupRecorder(this.recorderInUse);
         }
@@ -218,7 +221,7 @@ namespace Photon.Voice.Fusion
             {
                 if (this.Logger.IsWarningEnabled)
                 {
-                    this.Logger.LogWarning("Cannot setup a null Recorder");
+                    this.Logger.LogWarning("Cannot setup a null Recorder.");
                 }
                 return false;
             }
