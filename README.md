@@ -1,5 +1,7 @@
 # FusionVoiceIntegration
 
+repo tested with (latest commit done with) Photon Fusion 0.13.0-RC-Nightly-436 and Photon Voice 2.29.
+
 ## Intro
 
 First attempt to make an integration between Photon Voice and Photon Fusion
@@ -13,10 +15,19 @@ Main two components:
 
 ### Import
 
-1. Import Fusion [here](https://doc.photonengine.com/en-us/fusion/current/getting-started/sdk-download). (project tested with 0.13.0-RC-Nightly-365)
-2. Import Photon Voice 2 using Unity Package Manager or from [Unity Asset Store](https://assetstore.unity.com/packages/tools/audio/photon-voice-2-130518) (project tested with 2.28.2): 
+#### Import Photon Voice
+
+You can skip this if you already have Photon Voice in your project.
+
+Import Photon Voice 2 using Unity Package Manager or from [Unity Asset Store](https://assetstore.unity.com/packages/tools/audio/photon-voice-2-130518): 
     - Uncheck "Photon\PhotonChat" and "Photon\PhotonUnityNetworking" folders.
     - Uncheck "Photon\PhotonVoice\Code\Pun" and "Photon\PhotonVoice\Demos" folders.
+
+#### Import Photon Fusion
+
+You can skip this if you already have Photon Fusion in your project.
+
+1. Import Fusion [here](https://doc.photonengine.com/en-us/fusion/current/getting-started/sdk-download).
 3. Open the Photon App Settings using the menu item at `Fusion\Realtime Settings`.
 4. Get AppId of type Fusion and set it in Realtime Settings: "App Id Fusion".
 

@@ -436,6 +436,10 @@ namespace Photon.Voice.Fusion
         {
         }
 
+        void INetworkRunnerCallbacks.OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
+        {
+        }
+
         void INetworkRunnerCallbacks.OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data)
         {
         }
