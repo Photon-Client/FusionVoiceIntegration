@@ -1,3 +1,14 @@
+DISCLAIMER:
+
+This repository is now in "read-only" mode.
+Use it only to check out the basic demo scens provided here.
+
+The two main integration scripts `FusionVoiceBridge` and `VoiceNetworkObject` are now part of Photon Voice 2 package on the Unity Asset Store since version 2.31.
+
+This repository will be archived as soon as the documentation page for the integration goes live.
+
+---
+
 # FusionVoiceIntegration
 
 repo tested with (latest commit done with) Photon Fusion 0.13.0-RC-Nightly-436 and Photon Voice 2.29.
